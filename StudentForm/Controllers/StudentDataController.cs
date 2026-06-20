@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudentForm.Models;
 using StudentForm.Infra;
+using StudentForm.ViewModel;
 
 public class StudentDataController : Controller
 {
@@ -38,9 +39,14 @@ public class StudentDataController : Controller
     }
 
     // GET: STUDENTMODELS/Create
-    public IActionResult Create()
+    public async Task<IActionResult> Create()
     {
-        return View();
+        List<Course> courses = await _context.Course.ToListAsync();
+        StudentViewModel student = new StudentViewModel()
+        {
+            Courses = courses.Select(c => CourseSelectionViewModel.ToVM(c)).ToList()
+        };
+        return View(student);
     }
 
     // POST: STUDENTMODELS/Create

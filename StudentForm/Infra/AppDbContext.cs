@@ -10,5 +10,6 @@ namespace StudentForm.Infra
         }
 
         public DbSet<StudentModel> Students { get; set; }
+        public DbSet<Course> Course { get; set; }
     }
 }
