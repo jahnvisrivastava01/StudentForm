@@ -1,9 +1,6 @@
 # 🎓 Student Management System
 
 > ASP.NET Core MVC + Entity Framework Core + SQL Server
-
-
-
 ---
 
 ## 🚀 Features Implemented
