@@ -154,8 +154,8 @@ StudentForm
 
 ---
 
-### ⭐ Future Scope
+### Author
 
-This project is continuously evolving as I learn ASP.NET Core MVC and Entity Framework Core.
+Jahnvi Srivastava
 
 ⭐ If you like this project, consider giving it a star!
