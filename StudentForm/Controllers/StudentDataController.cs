@@ -15,9 +15,13 @@ public class StudentDataController : Controller
     }
 
     // GET: STUDENTMODELS
-    public async Task<IActionResult> Index()    
+    public async Task<IActionResult> Index()
     {
-        return View(await _context.Students.ToListAsync());
+        var students = await _context.Students
+                                     .Include(s => s.Courses)
+                                     .ToListAsync();
+
+        return View(students);
     }
 
     // GET: STUDENTMODELS/Details/5
@@ -29,7 +33,7 @@ public class StudentDataController : Controller
         }
 
         var studentmodel = await _context.Students
-            .FirstOrDefaultAsync(m => m.Id == id);
+            .Include(s=>s.Courses).FirstOrDefaultAsync(m=>m.Id == id);
         if (studentmodel == null)
         {
             return NotFound();
@@ -38,31 +42,62 @@ public class StudentDataController : Controller
         return View(studentmodel);
     }
 
-    // GET: STUDENTMODELS/Create
+    
+    // GET: StudentData/Create
     public async Task<IActionResult> Create()
     {
         List<Course> courses = await _context.Course.ToListAsync();
+
         StudentViewModel student = new StudentViewModel()
         {
-            Courses = courses.Select(c => CourseSelectionViewModel.ToVM(c)).ToList()
+            Courses = courses
+                        .Select(c => CourseSelectionViewModel.ToVM(c))
+                        .ToList()
         };
+
         return View(student);
     }
 
     // POST: STUDENTMODELS/Create
     // To protect from overposting attacks, enable the specific properties you want to bind to.
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+    // POST: StudentData/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Name,Email,Age,Course,EnrollmentId,Specialisation,Message")] StudentModel studentmodel)
+    public async Task<IActionResult> Create(StudentViewModel vm)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            _context.Add(studentmodel);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            vm.Courses = await _context.Course
+                                       .Select(c => CourseSelectionViewModel.ToVM(c))
+                                       .ToListAsync();
+
+            return View(vm);
         }
-        return View(studentmodel);
+
+        StudentModel student = new StudentModel()
+        {
+            Name = vm.Name,
+            Email = vm.Email,
+            Age = vm.Age,
+            EnrollmentId = vm.EnrollmentId,
+            Specialisation = vm.Specialisation
+        };
+
+        var selectedCourseIds = vm.Courses
+                           .Where(x => x.isSelected)
+                           .Select(x => x.Id)
+                           .ToList();
+
+        student.Courses = await _context.Course
+                                        .Where(c => selectedCourseIds.Contains(c.Id))
+                                        .ToListAsync();
+
+        _context.Students.Add(student);
+
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction(nameof(Index));
     }
 
     // GET: STUDENTMODELS/Edit/5
@@ -73,12 +108,39 @@ public class StudentDataController : Controller
             return NotFound();
         }
 
-        var studentmodel = await _context.Students.FindAsync(id);
+        var studentmodel = await _context.Students
+                                         .Include(s => s.Courses)
+                                         .FirstOrDefaultAsync(s => s.Id == id);
+
         if (studentmodel == null)
         {
             return NotFound();
         }
-        return View(studentmodel);
+
+        var selectedCourseIds = studentmodel.Courses
+                                            .Select(x => x.Id)
+                                            .ToHashSet();
+
+        var allCourses = await _context.Course.ToListAsync();
+
+        StudentViewModel vm = new StudentViewModel()
+        {
+            Id = studentmodel.Id,
+            Name = studentmodel.Name,
+            Email = studentmodel.Email,
+            Age = studentmodel.Age,
+            EnrollmentId = studentmodel.EnrollmentId,
+            Specialisation = studentmodel.Specialisation,
+
+            Courses = allCourses.Select(c => new CourseSelectionViewModel
+            {
+                Id = c.Id,
+                CourseName = c.CourseName,
+                isSelected = selectedCourseIds.Contains(c.Id)
+            }).ToList()
+        };
+
+        return View(vm);
     }
 
     // POST: STUDENTMODELS/Edit/5
@@ -86,34 +148,64 @@ public class StudentDataController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,Name,Email,Age,Course,EnrollmentId,Specialisation,Message")] StudentModel studentmodel)
+    public async Task<IActionResult> Edit(int id, StudentViewModel vm)
     {
-        if (id != studentmodel.Id)
+        if (id != vm.Id)
+        {
+            return NotFound();
+        }
+        Console.WriteLine("ModelState Valid = " + ModelState.IsValid);
+
+        if (!ModelState.IsValid)
+        {
+            foreach (var state in ModelState)
+            {
+                foreach (var error in state.Value.Errors)
+                {
+                    Console.WriteLine($"{state.Key} : {error.ErrorMessage}");
+                }
+            }
+
+            var allCourses = await _context.Course.ToListAsync();
+
+            vm.Courses = allCourses.Select(c => new CourseSelectionViewModel
+            {
+                Id = c.Id,
+                CourseName = c.CourseName,
+                isSelected = vm.Courses != null &&
+                             vm.Courses.Any(x => x.Id == c.Id && x.isSelected)
+            }).ToList();
+
+            return View(vm);
+        }
+
+        var student = await _context.Students
+                                    .Include(s => s.Courses)
+                                    .FirstOrDefaultAsync(s => s.Id == id);
+
+        if (student == null)
         {
             return NotFound();
         }
 
-        if (ModelState.IsValid)
-        {
-            try
-            {
-                _context.Update(studentmodel);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!StudentModelExists(studentmodel.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return RedirectToAction(nameof(Index));
-        }
-        return View(studentmodel);
+        student.Name = vm.Name;
+        student.Email = vm.Email;
+        student.Age = vm.Age;
+        student.EnrollmentId = vm.EnrollmentId;
+        student.Specialisation = vm.Specialisation;
+
+        var selectedIds = vm.Courses
+                            .Where(c => c.isSelected)
+                            .Select(c => c.Id)
+                            .ToList();
+
+        student.Courses = await _context.Course
+                                        .Where(c => selectedIds.Contains(c.Id))
+                                        .ToListAsync();
+
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction(nameof(Index));
     }
 
     // GET: STUDENTMODELS/Delete/5
@@ -154,3 +246,9 @@ public class StudentDataController : Controller
         return _context.Students.Any(e => e.Id == id);
     }
 }
+
+
+
+
+
+    

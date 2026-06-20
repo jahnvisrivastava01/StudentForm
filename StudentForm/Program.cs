@@ -1,9 +1,11 @@
     using Microsoft.EntityFrameworkCore;
     using StudentForm.Infra;
+using StudentForm.Services;
 
-    var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
     builder.Services.AddControllersWithViews();
+    builder.Services.AddScoped<StudentService>();
 
     builder.Services.AddDbContext<AppDbContext>(options =>
         options.UseSqlServer(

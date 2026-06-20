@@ -16,6 +16,14 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
+
+        <dt class="col-sm-2">
+            Courses
+        </dt>
+
+        <dd class="col-sm-10">
+            @string.Join(", ", Model.Courses.Select(c => c.CourseName))
+        </dd>
     </dl>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Email)
@@ -31,13 +39,8 @@
             @Html.DisplayFor(model => model.Age)
         </dd>
     </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Course)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Course)
-        </dd>
-    </dl>
+        
+    
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.EnrollmentId)
         </dt>
@@ -52,9 +55,7 @@
             @Html.DisplayFor(model => model.Specialisation)
         </dd>
     </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Message)
-        </dt>
+
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Message)
         </dd>

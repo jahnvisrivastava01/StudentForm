@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 
 namespace StudentForm.Models
@@ -21,8 +22,7 @@ namespace StudentForm.Models
         [Range(18,28,ErrorMessage = "Age should be between 18 and 28!")]
         public int Age { get; set; }
 
-        [Required(ErrorMessage = "Course is Required")]
-        public string Course { get; set; }
+        
 
         [Required(ErrorMessage = "Enrollment ID is Required")]
         
@@ -31,7 +31,7 @@ namespace StudentForm.Models
         [Required(ErrorMessage = "Specialisation is required")]
         public string Specialisation { get; set; }
 
-        
+        [NotMapped]
         public string Message { get; set; }
 
         public ICollection<Course> Courses { get; set; }
