@@ -2,10 +2,7 @@
 
 > ASP.NET Core MVC + Entity Framework Core + SQL Server
 
-![GitHub last commit](https://img.shields.io/github/last-commit/jahnvisrivastava01/StudentForm)
-![GitHub repo size](https://img.shields.io/github/repo-size/jahnvisrivastava01/StudentForm)
-![GitHub language count](https://img.shields.io/github/languages/count/jahnvisrivastava01/StudentForm)
-![GitHub top language](https://img.shields.io/github/languages/top/jahnvisrivastava01/StudentForm)
+
 
 ---
 
