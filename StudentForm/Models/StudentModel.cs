@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 
 namespace StudentForm.Models
@@ -34,6 +35,7 @@ namespace StudentForm.Models
         [NotMapped]
         public string Message { get; set; }
 
+        [JsonIgnore]
         public ICollection<Course> Courses { get; set; }
 
     }

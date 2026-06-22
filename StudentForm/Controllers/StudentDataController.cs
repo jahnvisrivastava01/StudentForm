@@ -42,7 +42,24 @@ public class StudentDataController : Controller
         return View(studentmodel);
     }
 
-    
+    public async Task<IActionResult> DetailsJson(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        var studentmodel = await _context.Students
+            .Include(s => s.Courses).FirstOrDefaultAsync(m => m.Id == id);
+        if (studentmodel == null)
+        {
+            return NotFound();
+        }
+
+        return Json(studentmodel);
+    }
+
+
     // GET: StudentData/Create
     public async Task<IActionResult> Create()
     {
@@ -56,6 +73,28 @@ public class StudentDataController : Controller
         };
 
         return View(student);
+    }
+
+
+    [HttpGet]
+    public async Task<IActionResult> JsonDetails(int id)
+    {
+        var student = await _context.Students.Include(s => s.Courses).FirstOrDefaultAsync(s => s.Id == id);
+
+        if (student == null)
+        {
+            return NotFound();
+        }
+        return Json(new
+        {
+            student.Name,
+            student.Email,
+            student.Age,
+            student.EnrollmentId,
+            student.Specialisation,
+            Courses=student.Courses.Select(c=>c.CourseName)
+
+        });
     }
 
     // POST: STUDENTMODELS/Create
