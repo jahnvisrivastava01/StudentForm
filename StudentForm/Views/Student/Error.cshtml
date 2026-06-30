@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Error";
+}
+
+<h2>Database Connection Error</h2>
+
+<p>
+    An error occurred while connecting to the database.
+</p>
+
+<p>
+    <strong>Error Details:</strong>
+    @ViewBag.ErrorMessage
+</p>
+
+<a asp-action="Index" class="btn btn-primary">
+    Back to Home
+</a>

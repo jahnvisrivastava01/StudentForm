@@ -17,9 +17,10 @@ namespace StudentForm.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            StudentViewModel vm=new StudentViewModel();
+            StudentViewModel vm = new StudentViewModel();
             vm.Courses = _studentService.GetCourseVMs();
-            return View("Student",vm);
+
+            return View("Student", vm);
         }
 
         [HttpPost]
