@@ -226,6 +226,5 @@ StudentForm
 
 **Jahnvi Srivastava**
 
-B.Tech CSE Student | ASP.NET Core Developer | Learning Full-Stack Development
 
 ⭐ **If you found this project helpful, consider giving it a Star!**
