@@ -1,144 +1,155 @@
 # 🎓 Student Management System
 
-**ASP.NET Core MVC + Entity Framework Core + SQL Server**
+An **ASP.NET Core MVC** web application for managing student records with **Entity Framework Core**, **SQL Server**, **AJAX**, **JSON**, **Bootstrap**, and **Serilog** for centralized logging and exception handling.
 
 ---
 
 ## 🚀 Features Implemented
 
 ### ✅ Student Module
-
-* Create Student
-* Edit Student
-* Delete Student
-* View Details
-* Form Validation
+- Create Student
+- Edit Student
+- Delete Student
+- View Student Details
+- Server-Side Form Validation
 
 ### ✅ Course Module
-
-* Multiple Course Selection
-* Checkbox Binding
-* Display Selected Courses
+- Multiple Course Selection
+- Checkbox Binding
+- Display Selected Courses
 
 ### ✅ Relationships
-
-* Many-to-Many Relationship
-* Navigation Properties
-* Junction Table (`CourseStudentModel`)
+- Many-to-Many Relationship
+- Navigation Properties
+- Junction Table (`CourseStudentModel`)
 
 ### ✅ Database
-
-* SQL Server Integration
-* Entity Framework Core
-* Migrations
+- SQL Server Integration
+- Entity Framework Core
+- Code-First Migrations
 
 ### ✅ AJAX & JSON
+- Fetch Student Details using AJAX
+- Return JSON from Controller
+- Bootstrap Modal Popup
+- Display Student Details without Page Refresh
 
-* Details JSON Button
-* Fetch Student Details using AJAX
-* Return JSON from Controller
-* Bootstrap Modal Popup
-* Display Student Details in Table without Page Refresh
+### ✅ Exception Handling & Logging
+- Global Exception Handling
+- Custom Error Page
+- Centralized Exception Logging
+- Serilog Integration
+- Console Logging
+- Daily Rolling Log Files
+- Configuration using `appsettings.json`
+
+---
+
+## 📝 Logging
+
+This project uses **Serilog** for centralized logging to capture application events and exceptions in a structured and maintainable way.
+
+### Logging Features
+
+- ✅ Console Logging
+- ✅ File Logging
+- ✅ Daily Rolling Log Files
+- ✅ Structured Logging
+- ✅ Global Exception Logging
+- ✅ Configuration-driven Logging using `appsettings.json`
 
 ---
 
 ## 🛠 Tech Stack
 
-| Technology            | Used |
-| --------------------- | ---- |
-| ASP.NET Core MVC      | ✅    |
-| C#                    | ✅    |
-| Entity Framework Core | ✅    |
-| SQL Server            | ✅    |
-| Razor Views           | ✅    |
-| Bootstrap             | ✅    |
-| jQuery                | ✅    |
-| AJAX                  | ✅    |
-| JSON                  | ✅    |
+| Technology | Used |
+|------------|------|
+| ASP.NET Core MVC | ✅ |
+| C# | ✅ |
+| Entity Framework Core | ✅ |
+| SQL Server | ✅ |
+| Razor Views | ✅ |
+| Bootstrap | ✅ |
+| jQuery | ✅ |
+| AJAX | ✅ |
+| JSON | ✅ |
+| Serilog | ✅ |
+| Git & GitHub | ✅ |
 
 ---
 
 ## 📂 Database Structure
 
 ### Students
-
-```
-Id
-Name
-Email
-Age
-EnrollmentId
-Specialisation
-```
+- Id
+- Name
+- Email
+- Age
+- EnrollmentId
+- Specialisation
 
 ### Course
-
-```
-Id
-CourseName
-```
+- Id
+- CourseName
 
 ### CourseStudentModel
-
-```
-StudentsId
-CoursesId
-```
+- StudentsId
+- CoursesId
 
 ---
 
 ## 📸 Current Functionalities
 
-* ✅ Create Student
-* ✅ Edit Student
-* ✅ Delete Student
-* ✅ Details Page
-* ✅ Multiple Course Selection
-* ✅ Display Selected Courses
-* ✅ Many-to-Many Relationship
-* ✅ Validation using Data Annotations
-* ✅ AJAX Details Button
-* ✅ JSON Response
-* ✅ Bootstrap Modal Popup
+- ✅ Create Student
+- ✅ Edit Student
+- ✅ Delete Student
+- ✅ View Student Details
+- ✅ Multiple Course Selection
+- ✅ Display Selected Courses
+- ✅ Many-to-Many Relationship
+- ✅ Validation using Data Annotations
+- ✅ AJAX-based Student Details
+- ✅ JSON Response
+- ✅ Bootstrap Modal Popup
+- ✅ Global Exception Handling
+- ✅ Custom Error Page
+- ✅ Serilog Logging
+- ✅ Daily Rolling Log Files
 
 ---
 
 ## 🧠 Concepts Covered
 
-* CRUD Operations
-* Entity Framework Core
-* SQL Server Integration
-* LINQ Queries
-* Navigation Properties
-* ViewModels
-* Razor Syntax
-* Data Annotations
-* Many-to-Many Relationships
-* Eager Loading (`Include()`)
-* JSON Serialization
-* jQuery
-* AJAX
-* DOM Manipulation
-* Bootstrap Modal
-* Asynchronous Programming
-
----
-
-## 🔮 Upcoming Features
-
-* Search Student
-* Pagination
-* Course CRUD
-* Authentication
-* Role-Based Authorization
-* Dashboard
-* Better UI with Bootstrap
+- CRUD Operations
+- ASP.NET Core MVC
+- Entity Framework Core
+- SQL Server Integration
+- LINQ Queries
+- ViewModels
+- Razor Syntax
+- Data Annotations
+- Navigation Properties
+- Many-to-Many Relationships
+- Eager Loading (`Include()`)
+- JSON Serialization
+- jQuery
+- AJAX
+- DOM Manipulation
+- Bootstrap Modal
+- Asynchronous Programming
+- Global Exception Handling
+- MVC Exception Pipeline
+- Serilog Logging
+- Structured Logging
+- Rolling Log Files
+- Configuration-driven Logging
+- Custom Error Pages
 
 ---
 
 ## 📁 Project Structure
 
-```
+```text
 StudentForm
 │
 ├── Controllers
@@ -146,29 +157,68 @@ StudentForm
 ├── ViewModel
 ├── Views
 ├── Infra
+├── Handlers
 ├── Migrations
+├── Logs
 ├── wwwroot
-└── appsettings.json
+├── appsettings.json
+├── Program.cs
+└── StudentForm.sln
 ```
+
+---
+
+## 🔮 Upcoming Features
+
+- 🔍 Search Students
+- 📄 Pagination
+- 📚 Course CRUD
+- 🔐 Authentication
+- 👥 Role-Based Authorization
+- 📊 Dashboard
+- 🎨 Enhanced UI with Bootstrap
 
 ---
 
 ## ⚡ Learning Outcomes
 
-✔ CRUD Operations
+✔ ASP.NET Core MVC
+
 ✔ Entity Framework Core
+
 ✔ SQL Server Integration
-✔ ViewModels
-✔ Validation
-✔ Navigation Properties
+
+✔ CRUD Operations
+
 ✔ LINQ Queries
+
+✔ ViewModels
+
+✔ Validation using Data Annotations
+
+✔ Navigation Properties
+
 ✔ Many-to-Many Relationships
-✔ jQuery Fundamentals
-✔ AJAX Calls
-✔ JSON Responses
+
+✔ AJAX & JSON
+
 ✔ Bootstrap Modal
+
 ✔ DOM Manipulation
-✔ Async Programming
+
+✔ Asynchronous Programming
+
+✔ Global Exception Handling
+
+✔ Serilog Logging
+
+✔ Structured Logging
+
+✔ Rolling Log Files
+
+✔ Configuration using `appsettings.json`
+
+✔ Custom Error Pages
 
 ---
 
@@ -176,6 +226,6 @@ StudentForm
 
 **Jahnvi Srivastava**
 
----
+B.Tech CSE Student | ASP.NET Core Developer | Learning Full-Stack Development
 
-⭐ If you like this project, consider giving it a star!
+⭐ **If you found this project helpful, consider giving it a Star!**
